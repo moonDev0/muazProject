@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../../public/images/logo.png'
+import logo from '../../public/images/newlogo.png'
 import Image from 'next/image';
 import { LinkList } from './NavList';
 import Link from 'next/link';
@@ -27,8 +27,9 @@ const Navbar = () => {
     <div className='bg-gray-50 px-5 md:px-0 fixed md:py-2 left-0 right-0 top-0 z-10 shadow-lg'>
       <div className='container flex justify-between items-center mx-auto'>
         <div className='logo'>
-          <Link href='/'>
-            <Image src={logo} className='' alt='Logo' />
+          <Link className='flex items-center' href='/'>
+            <Image src={logo} className=' w-[70px] h-[70px]' alt='Logo' />
+            <h1 className=' text-primary font-bold'> &nbsp; Land base</h1>
           </Link>
         </div>
 
