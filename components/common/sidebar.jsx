@@ -20,33 +20,19 @@ import { FaFaceSmileBeam } from "react-icons/fa6";
 import { IoFootballOutline, IoLogInSharp } from "react-icons/io5";
 import Link from "next/link";
 import Image from "next/image";
-import logo from "../../public/images/dashboard-logo.png";
+import logo from "../../public/images/newlogo.png";
 
 const Sidebar = () => {
   const router = useRouter();
 
   const sidebarItems = [
     { text: "Dashboard", href: "/dashboard", icon: <AiOutlineAppstore /> },
-    {
-      text: "Assessment/Reports",
-      sublinks: [
-        { text: "Photo Gallery", href: "/dashboard/mediaCenter/photogalleryView", icon: <IoFootballOutline /> },
-        { text: "Video Gallery", href: "/dashboard/mediaCenter/videogalleryView", icon: <AiOutlineYoutube /> },
-      ],
-    },
-    { text: "Schools", href: "/dashboard/events", icon: <FaSchool /> },
-    { text: "Users", icon: <FaUsers /> },
-    { text: "Task", icon: <FaTasks /> },
-    {
-      text: "Wellbeing",
-      icon: <FaFaceSmileBeam />,
-      sublinks: [
-        { text: "Photo Gallery", href: "/dashboard/mediaCenter/photogalleryView", icon: <IoFootballOutline /> },
-        { text: "Video Gallery", href: "/dashboard/mediaCenter/videogalleryView", icon: <AiOutlineYoutube /> },
-      ],
-    },
-    { text: "Emails", href: "/dashboard/reminders", icon: <FaMailBulk /> },
-    { text: "Chats", href: "/dashboard/reminders", icon: <HiChatBubbleLeftRight /> },
+    { text: "certificates", href: "/dashboard/events", icon: <FaSchool /> },
+    { text: "Approved", icon: <FaUsers /> },
+    { text: "Pending", icon: <FaTasks /> },
+    
+    { text: "Rejected", href: "/dashboard/reminders", icon: <FaMailBulk /> },
+    { text: "emails", href: "/dashboard/reminders", icon: <HiChatBubbleLeftRight /> },
     { text: "Logs", href: "/dashboard/reminders", icon: <IoLogInSharp /> },
   ];
 
@@ -60,7 +46,7 @@ const Sidebar = () => {
     <div className="bg-primary pb-2 font-KumbhSan w-[250px]  fixed my-3 mx-3 rounded-3xl px-8 text-white">
       <Link href="/">
         <div className="logo w-full mt-10">
-          <Image src={logo} alt="logo" className="mx-auto" />
+          <Image src={logo} alt="logo" className=" h-70px] w-[70px] mx-auto" />
         </div>
       </Link>
       <ul className="firstUL">

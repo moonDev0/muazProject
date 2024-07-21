@@ -1,7 +1,7 @@
 import React from 'react'
-import hero3 from '../../public/images/hero3.png'
-import hero2 from '../../public/images/hero2.png'
-import hero1 from '../../public/images/hero1.png'
+import hero3 from '../../public/images/land1.png'
+import hero2 from '../../public/images/land2.png'
+import hero1 from '../../public/images/land3.png'
 import underline from '../../public/images/Underline.png'
 import Pupilbase from '../../public/images/pupilBase.png'
 import Image from 'next/image'
@@ -27,13 +27,13 @@ const Hero = () => {
 
         <div className=' container md:pl-20 lg:pl-10 w-full md:w-[720px] mx-auto text-center mt-[10px]'>
        
-          <h1 className=' text-black text-center md:text-justify font-[800] text-[30px] md:text-[45px] lg:text-[64px] font-sen leading-[70px]'>Improve <span className=' text-primary'>Wellbeing </span> <br /> </h1>
+          <h1 className=' text-black text-center md:text-justify font-[800] text-[30px] md:text-[45px] lg:text-[64px] font-sen leading-[70px]'>Certify your <span className=' text-primary'>Land </span> <br /> </h1>
             <Image src={underline} className=' mx-auto scale-[0.8]  md:scale-[0.5]  md:ml-[200px] lg:scale-[1]  lg:ml-72 mt-[-20px]' alt='unerline'/>
-        <h1 className=' text-black text-center md:text-justify mt-[-40px] font-[800] font-sen text-[24px] md:text-[45px] lg:text-[64px] leading-[70px]'>Reduce Workload</h1>
+        <h1 className=' text-black text-center md:text-justify mt-[-40px] font-[800] font-sen text-[24px] md:text-[45px] lg:text-[64px] leading-[70px]'>be on the safer side</h1>
         
 
         <div className=' flex flex-wrap md:flex-nowrap justify-center items-center'>
-            <p className=' text-black md:text-left font-syne text-[16px] md:text-[18px] text-justify'>We are all required to do more, to meet more challenges with fewer resources, Adopting a more strategic and systematic approach to wellbeing is likely to make your staff feel more valued, positive and supported. And let's face it, A happy workforce is also a healthy one</p>
+            <p className=' text-black md:text-left font-syne text-[16px] md:text-[18px] text-justify'>Ensure your land's legitimacy and security by certifying it today. Protect your property rights and gain peace of mind with clear, uncontested ownership. Stay proactive—certify your land and secure your investment for the future.</p>
             
             <div className=' mt-10 md:mt-0'>
                 <Button title="Get Started"/>
@@ -42,7 +42,7 @@ const Hero = () => {
 
         </div>
           <div className=' my-20 container mx-auto'>
-            <h1 className=' text-black text-center mb-2 md:mb-10 font-bold font-syne text-[18px] md:text-[20px]'>Trusted By More than 50 schools</h1>
+            <h1 className=' text-black text-center mb-2 md:mb-10 font-bold font-syne text-[18px] md:text-[20px]'>Trusted By More than 50 Organizations</h1>
             <div className='grid justify-items-center grid-cols-6'>
               <div className=' '>
                 <Image src={Pupilbase} alt='schools' className=''/>

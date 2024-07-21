@@ -21,21 +21,16 @@ export default function Home() {
         <Hero/>
       </div>
 
+      {/*
       <div>
         <Funtions/>
       </div>
+    */}
 
       <div>
         <Subscribe/>
       </div>
 
-      <div>
-        <Testimonials/>
-      </div>
-
-      <div>
-        <Newsletter/>
-      </div>
 
       <div>
         <Footer/>

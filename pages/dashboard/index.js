@@ -28,7 +28,7 @@ const index = () => {
                         </div>
 
                         <div>
-                            <h3 className=' font-medium text-[14px] mt-[-8px] text-[#999999]'>Audit</h3>
+                            <h3 className=' font-medium text-[14px] mt-[-8px] text-[#999999]'>pending</h3>
                             <h1 className=' leading-8 text-primary text-[32px] font-extrabold '>20</h1>
                         </div>
                     </div>
@@ -39,7 +39,7 @@ const index = () => {
                         </div>
 
                         <div>
-                            <h3 className=' font-medium text-[14px] mt-[-8px] text-[#999999]'>Survey</h3>
+                            <h3 className=' font-medium text-[14px] mt-[-8px] text-[#999999]'>Approved</h3>
                             <h1 className=' leading-8 text-primary text-[32px] font-extrabold '>20</h1>
                         </div>
                     </div>
@@ -50,7 +50,7 @@ const index = () => {
                         </div>
 
                         <div>
-                            <h3 className=' font-medium text-[14px] mt-[-8px] text-[#999999]'>Task</h3>
+                            <h3 className=' font-medium text-[14px] mt-[-8px] text-[#999999]'>rejected</h3>
                             <h1 className=' leading-8 text-primary text-[32px] font-extrabold '>20</h1>
                         </div>
                     </div>
@@ -61,7 +61,7 @@ const index = () => {
                         </div>
 
                         <div>
-                            <h3 className=' font-medium text-[14px] mt-[-8px] text-[#999999]'>Report</h3>
+                            <h3 className=' font-medium text-[14px] mt-[-8px] text-[#999999]'>certificates</h3>
                             <h1 className=' leading-8 text-primary text-[32px] font-extrabold '>20</h1>
                         </div>
                     </div>
@@ -75,12 +75,12 @@ const index = () => {
 
 
                <div className=' w-full bg-white font-poppins mt-5 px-10 py-5'>
-                <h2 className=' font-semibold text-[16px]'>Task to be completed</h2>
+                <h2 className=' font-semibold text-[16px]'>Pending submission</h2>
 
                 <hr className=' my-2' />
                 <div>
                     <div className=' text-[14px] font-medium grid grid-cols-4'>
-                        <h1>Task</h1>
+                        <h1>name</h1>
                         <h1>Due date</h1>
                         <h1>Assigned to</h1>
                         <h1 className=' justify-self-end'>Status</h1>

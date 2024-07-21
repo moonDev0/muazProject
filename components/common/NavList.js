@@ -2,21 +2,17 @@ export const LinkList = [
     {
         id:1,
         name:'About',
-        path:'/aboutUs/aboutUs',
+        path:'#',
     },
     {
         id:2,
         name:'Affiliates',
-        path:'/affiliated/affiliated',
+        path:'#',
     },
-    {
-        id:3,
-        name:'Resources',
-        path:'/resources/resources',
-    },
+  
     {
         id:4,
         name:'Contact',
-        path:'/contact/contact',
+        path:'#',
     }
 ];

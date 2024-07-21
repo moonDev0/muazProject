@@ -24,22 +24,22 @@ const Funtions = () => {
         <div className=' bg-func-BG bg-contain bg-no-repeat lg:bg-repeat font-syne pb-20 leading-[30px] gap-10 md:gap-6 py-10 justify-items-center  container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4'>
             <div className=' justify-self-center'>
                 <Image src={audit} alt='audit img' className='h-[150px] w-[200px]'/>
-                <p className=' text-center font-bold text-[18px] md:text-[28px] lg:text-[24px] text-black'>Audit</p>
+                <p className=' text-center font-bold text-[18px] md:text-[28px] lg:text-[24px] text-black'>register</p>
             </div>
 
             <div className=' justify-self-center'>
                 <Image src={report} alt='audit img' className='h-[150px] mx-auto w-[150px]'/>
-                <p className=' text-center font-bold text-[18px] md:text-[28px] lg:text-[24px] text-black'>Survey <br className=' hidden md:block'/> Stakeholders</p>
+                <p className=' text-center font-bold text-[18px] md:text-[28px] lg:text-[24px] text-black'>get <br className=' hidden md:block'/> certify</p>
             </div>
 
             <div className=' justify-self-center'>
                 <Image src={Survey} alt='audit img' className=' h-[150px] mx-auto w-[150px]'/>
-                <p className=' text-center font-bold text-[16px] md:text-[28px] lg:text-[24px] text-black'>Generate <br className=' hidden md:block' /> Reports</p>
+                <p className=' text-center font-bold text-[16px] md:text-[28px] lg:text-[24px] text-black'>verify <br className=' hidden md:block' /> ownership</p>
             </div>
 
             <div className=' justify-self-center'>
                 <Image src={Workload} alt='audit img' className='h-[150px] mx-auto w-[150px]'/>
-                <p className=' text-center font-bold text-[16px] md:text-[28px] lg:text-[24px] text-black'>Manage <br className=' hidden md:block' /> Workload</p>
+                <p className=' text-center font-bold text-[16px] md:text-[28px] lg:text-[24px] text-black'>Manage <br className=' hidden md:block' /> lands</p>
             </div>
         </div>
 
