@@ -2,16 +2,16 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 // import { getStorage } from "firebase/storage";
-
-const firebaseConfig = {
-    apiKey: "AIzaSyDHG3zEf9Uq06ENNH6WMcAWNyi2mkCp5MM",
-    authDomain: "muazweb-f6364.firebaseapp.com",
-    projectId: "muazweb-f6364",
-    storageBucket: "muazweb-f6364.appspot.com",
-    messagingSenderId: "88275676503",
-    appId: "1:88275676503:web:ae06c5552fea8055852212"
-  };
   
+  const firebaseConfig = {
+    apiKey: "AIzaSyBjT3XIL1gAnT4Jj9OTHTTxvbAWpXdfx50",
+    authDomain: "muazweb-f3cc6.firebaseapp.com",
+    projectId: "muazweb-f3cc6",
+    storageBucket: "muazweb-f3cc6.appspot.com",
+    messagingSenderId: "328767759001",
+    appId: "1:328767759001:web:88b66f2ce87ce3c3c00e08",
+    measurementId: "G-DL69FD91WH"
+  };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);

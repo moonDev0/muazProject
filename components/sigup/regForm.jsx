@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import { auth } from '../../firebase';
+import { auth, db } from '../../firebase'; // Import auth and Firestore
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { collection, addDoc } from 'firebase/firestore';
+import { toast } from 'react-toastify';
+import Spinner from '@/lib/spinner';
 
 const RegistrationComponent = () => {
     const [fullName, setFullName] = useState('');
@@ -11,6 +14,7 @@ const RegistrationComponent = () => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [ninNumber, setNinNumber] = useState('');
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -27,18 +31,35 @@ const RegistrationComponent = () => {
         }
 
         try {
+            // Register user with Firebase Authentication
+            setLoading(true)
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
-            // You can store additional user data in a database (e.g., Firestore) here.
-            console.log('User registered:', user);
+
+            // Save additional user data to Firestore
+            await addDoc(collection(db, 'users'), {
+                uid: user.uid,
+                fullName: fullName,
+                email: email,
+                address: address,
+                phoneNumber: phoneNumber,
+                ninNumber: ninNumber,
+                createdAt: new Date(),
+            });
+
+            toast.success("Registered succesfully");
+            console.log('User registered and additional data saved');
+            setLoading(false)
         } catch (error) {
             setError('Error during registration: ' + error.message);
+            toast.error("something went wrong");
+            setLoading(false)
         }
     };
 
     return (
-        <div className="container mx-auto mt-20">
-            <h1 className="text-center text-2xl font-bold mb-4 text-primary">Register Account</h1>
+        <div className="container mx-auto mt-36">
+            <h1 className="text-center text-2xl font-bold mb-4 text-primary">Register to get started</h1>
             <form onSubmit={handleRegister} className="space-y-4">
                 <div>
                     <label htmlFor="fullName" className="text-primary block">Full Name</label>
@@ -58,7 +79,7 @@ const RegistrationComponent = () => {
                         id="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="border text-black w-full p-2"
+                        className="border w-full p-2 text-black"
                         required
                     />
                 </div>
@@ -69,7 +90,7 @@ const RegistrationComponent = () => {
                         id="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="border text-black w-full p-2"
+                        className="border w-full p-2 text-black"
                         required
                     />
                 </div>
@@ -80,7 +101,7 @@ const RegistrationComponent = () => {
                         id="confirmPassword"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
-                        className="border text-black w-full p-2"
+                        className="border w-full p-2 text-black"
                         required
                     />
                 </div>
@@ -91,7 +112,7 @@ const RegistrationComponent = () => {
                         id="address"
                         value={address}
                         onChange={(e) => setAddress(e.target.value)}
-                        className="border text-black w-full p-2"
+                        className="border w-full p-2 text-black"
                         required
                     />
                 </div>
@@ -102,7 +123,7 @@ const RegistrationComponent = () => {
                         id="phoneNumber"
                         value={phoneNumber}
                         onChange={(e) => setPhoneNumber(e.target.value)}
-                        className="border text-black w-full p-2"
+                        className="border w-full p-2 text-black"
                         required
                     />
                 </div>
@@ -113,13 +134,15 @@ const RegistrationComponent = () => {
                         id="ninNumber"
                         value={ninNumber}
                         onChange={(e) => setNinNumber(e.target.value)}
-                        className="border text-black w-full p-2"
+                        className="border w-full p-2 text-black"
                         required
                     />
                 </div>
                 {error && <p className="text-red-500">{error}</p>}
                 <button type="submit" className="bg-blue-500 text-white p-2 w-full">
-                    Register
+                  {
+                    loading ? <Spinner/> :   "Register Now"
+                  }
                 </button>
             </form>
         </div>
