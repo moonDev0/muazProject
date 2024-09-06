@@ -5,8 +5,23 @@ import loginImage from '../../public/images/Login-amico 1.png'
 import loginIcon from '../../public/images/login-icon.png'
 import Image from 'next/image'
 import Button from '../common/button'
+import { auth, provider } from '../../firebase';
+import { signInWithPopup } from 'firebase/auth';
+import { useRouter } from 'next/router';
 
 const LoginComponent = () => {
+
+    const router =useRouter();
+
+    const handleLogin = async () => {
+        try {
+          await signInWithPopup(auth, provider);
+          router.push("/dashboard")
+        } catch (error) {
+          console.log('Error during login:', error);
+        }
+      };
+
   return (
     <div> 
         <div className=' container mx-auto grid grid-cols-1 mt-32 mb-24  md:grid-cols-2'>
@@ -35,8 +50,9 @@ const LoginComponent = () => {
                         <input type="password" className=' w-full py-2 text-black px-10 outline-none bg-transparent' placeholder='Password' name="password" id="" />
                     </div>
 
-                    <button className=' bg-primary text-white w-full rounded-br-lg rounded-tl-lg py-2'>Login</button>
-                </form>
+                    <button  className=' bg-primary text-white w-full rounded-br-lg rounded-tl-lg py-2'>Login</button>
+                    </form>
+                    <button onClick={handleLogin}>Sign in with Google</button>
             </div>      
         </div>
     </div>

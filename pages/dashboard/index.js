@@ -6,8 +6,12 @@ import Image from 'next/image';
 import { FaFileAlt } from "react-icons/fa";
 import { IoSearch } from "react-icons/io5";
 import Statistics from '@/components/chart/chart';
+import useAuth from '@/hooks/useAuth';
+
 
 const index = () => {
+    const user = useAuth();
+    console.log(user)
   return (
     <Layout>
         <div className='  h-[100vh]  w-full bg-[#EFEFEF]'>    
