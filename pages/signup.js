@@ -2,6 +2,7 @@ import Navbar from '@/components/common/navbar'
 import Footer from '@/components/footer/footer'
 import Payment from '@/components/sigup/payment'
 import Progress from '@/components/sigup/progress'
+import RegistrationComponent from '@/components/sigup/regForm'
 // import SignupHeader from '@/components/sigup/signupHeader'
 import SignupComponent from '@/components/sigup/step1'
 import Subscription from '@/components/sigup/subscription'
@@ -33,23 +34,8 @@ const Signup = () => {
             <Navbar/>
         </div>
 
-        <div>
-        {
-
-          step == 1 && <SignupComponent onNext={handleNext}/>
-        }
-        
-        {
-
-          step == 2 && <Subscription onPrevious={handlePrevious} onNext={handleNext}/>
-        }
-
-        {
-
-          step == 3 && <Payment  data={formData} onPrevious={handlePrevious}/>
-        }
-        
-       
+        <div>        
+        <RegistrationComponent/>
         </div>
 
         <div>
