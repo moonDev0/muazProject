@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { LuUser } from "react-icons/lu";
 import { FiLock } from "react-icons/fi";
-import loginImage from '../../public/images/Login-amico 1.png';
-import loginIcon from '../../public/images/login-icon.png';
+import loginImage from '../../public/images/newlogo.png';
+import loginIcon from '../../public/images/newlogo.png';
 import Image from 'next/image';
 import Button from '../common/button';
 import { auth, provider } from '../../firebase';
@@ -40,11 +40,11 @@ const LoginComponent = () => {
         <div> 
             <div className='container mx-auto grid grid-cols-1 mt-32 mb-24 md:grid-cols-2'>
                 <div className='justify-self-center hidden md:block'>
-                    <Image src={loginImage} alt='login Img' className='' />
+                    <Image src={loginImage} alt='login Img' className=' w-[400px]' />
                 </div>
                 <div className='flex flex-col justify-center px-4 md:px-20 items-center'>
                     <div className='flex justify-center'>
-                        <Image src={loginIcon} alt='img' className='ml-10' />
+                        <Image src={loginIcon} alt='img' className='ml-10 w-[100px]' />
                     </div>
                     <h1 className='text-black text-[30px] font-extrabold font-syne mt-[-20px] text-center'>Login</h1>
                     <form onSubmit={handleLoginWithEmail} className='w-full'>
@@ -87,9 +87,8 @@ const LoginComponent = () => {
                         </button>
                     </form>
 
-                    <p className="text-center my-4">OR</p>
 
-                    <button onClick={handleLoginWithGoogle} className="bg-blue-500 text-white w-full rounded-br-lg rounded-tl-lg py-2">
+                    <button onClick={handleLoginWithGoogle} className="bg-blue-500 mt-5 text-white w-full rounded-br-lg rounded-tl-lg py-2">
                         Sign in with Google
                     </button>
                 </div>      
