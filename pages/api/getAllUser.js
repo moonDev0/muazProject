@@ -1,6 +1,6 @@
 // pages/api/fetchUsers.js
 import { getDocs, collection } from 'firebase/firestore';
-import { db } from '@/firebaseConfig'; // Ensure the path is correct for your project
+import { db } from '@/firebase'; // Ensure the path is correct for your project
 
 export default async function handler(req, res) {
     try {

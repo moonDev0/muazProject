@@ -11,10 +11,10 @@ import Statistics from '@/components/chart/chart';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase'; 
 
-// const fetchUserData = async (uid) => {
-//     const response = await axios.get(`/api/getUSers?uid=${uid}`);
-//     return response.data;
-// };
+const fetchUserData = async (uid) => {
+    const response = await axios.get(`/api/getUSerbyid?uid=${uid}`);
+    return response.data;
+};
 
 const IndexDash = () => {
     const { user } = useUserStore();
@@ -22,18 +22,18 @@ const IndexDash = () => {
     const [loading, setLoading] = useState(false)
     const [data, setData] = useState([]);
 
-    // // Updated useQuery for v5 API
-    // const { data, error, isLoading } = useQuery({
-    //     queryKey: ['fetchUserData', uid],
-    //     queryFn: () => fetchUserData(uid),
-    //     enabled: !!uid, // Ensure query is not executed if UID is not available
-    // });
-    
+    // Updated useQuery for v5 API
+    const { data:databyID, error, isLoading } = useQuery({
+        queryKey: ['fetchUserData', uid],
+        queryFn: () => fetchUserData(uid),
+        enabled: !!uid, // Ensure query is not executed if UID is not available
+    });
+    console.log(databyID);
 
-    useEffect(() => {
+    useEffect(() => { 
         const fetchData = async () => {
             try {
-                const response = await axios.get('/api/fetchUsers');
+                const response = await axios.get('/api/getAllUser');
                 setData(response.data);
                 setLoading(false);
                 console.log(response.data)

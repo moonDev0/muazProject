@@ -42,8 +42,8 @@ const LoginComponent = () => {
             const user = data?.user;
             saveuser(user);
             setLoading(false);
-            console.log(user)
-            toast.success("Welcome" )
+            console.log(user.userData.fullName)
+            toast.success(`welcome ${user.userData.fullName}`)
             router.push('/dashboard');
         } catch (error) {
             setError(error.message);
