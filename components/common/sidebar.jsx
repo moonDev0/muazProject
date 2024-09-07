@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { GiResize } from "react-icons/gi";
+import useLogout from "@/hooks/loggout";
 import {
   FaHome,
   FaUsers,
@@ -24,6 +25,7 @@ import logo from "../../public/images/newlogo.png";
 
 const Sidebar = () => {
   const router = useRouter();
+  const { logout, error, loading } = useLogout();
 
   const sidebarItems = [
     { text: "Dashboard", href: "/dashboard", icon: <AiOutlineAppstore /> },
@@ -43,7 +45,7 @@ const Sidebar = () => {
   const toggleDropdown = (index) => setOpenDropdown((prev) => (prev === index ? null : index));
 
   return (
-    <div className="bg-primary pb-2 font-KumbhSan w-[250px]  fixed my-3 mx-3 rounded-3xl px-8 text-white">
+    <div className="bg-primary pb-2 font-KumbhSan w-[250px] h-[96vh]  fixed my-3 mx-3 rounded-3xl px-8 text-white">
       <Link href="/">
         <div className="logo w-full mt-10">
           <Image src={logo} alt="logo" className=" h-70px] w-[70px] mx-auto" />
@@ -120,10 +122,10 @@ const Sidebar = () => {
             </li>
 
             <li className=" mt-5">
-                <Link href="" className=" flex items-center">
+                <button onClick={logout} className=" flex items-center">
                     <i className=" mr-2"><FaSignOutAlt /></i>
                     <h1>Sign Out</h1>
-                </Link>
+                </button>
             </li>
 
             <li className=" mt-6 mb-5">

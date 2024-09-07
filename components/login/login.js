@@ -8,33 +8,76 @@ import Button from '../common/button';
 import { auth, provider } from '../../firebase';
 import { signInWithPopup, signInWithEmailAndPassword } from 'firebase/auth';
 import { useRouter } from 'next/router';
+import useUserStore from '@/store/useStore';
+import { toast } from 'react-toastify';
+import Spinner from '@/lib/spinner';
 
 const LoginComponent = () => {
     const router = useRouter();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
-
+    const [loading, setLoading] = useState(false);
+    const {saveuser} = useUserStore();
+  
+    const handleLoginWithEmail = async (e) => {
+        e.preventDefault();
+    
+        try {
+            setLoading(true);
+            const response = await fetch('/api/loginWithEmails', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            });
+    
+            const data = await response.json();
+    
+            if (!response.ok) {
+                throw new Error(data.message || 'Invalid email or password'); 
+                setLoading(false)
+            }
+            const user = data?.user;
+            saveuser(user);
+            setLoading(false);
+            console.log(user)
+            toast.success("Welcome" )
+            router.push('/dashboard');
+        } catch (error) {
+            setError(error.message);
+            setLoading(false);
+            console.log('Error during email/password login:', error);
+        }
+    };
+    
     const handleLoginWithGoogle = async () => {
         try {
-            await signInWithPopup(auth, provider);
-            router.push("/dashboard");
+            const result = await signInWithPopup(auth, provider);
+            const idToken = await result.user.getIdToken(); // Get the ID token
+            
+            const response = await fetch('/api/login-google', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ idToken }),
+            });
+    
+            const data = await response.json();
+    
+            if (!response.ok) {
+                throw new Error(data.message || 'Google login failed');
+            }
+    
+            setUser(data.user); // Save user in the store
+            router.push('/dashboard');
         } catch (error) {
             console.log('Error during login with Google:', error);
         }
     };
-
-    const handleLoginWithEmail = async (e) => {
-        e.preventDefault(); // Prevent form from submitting
-
-        try {
-            await signInWithEmailAndPassword(auth, email, password);
-            router.push("/dashboard");
-        } catch (error) {
-            setError("Invalid email or password");
-            console.log('Error during email/password login:', error);
-        }
-    };
+    
 
     return (
         <div> 
@@ -83,7 +126,7 @@ const LoginComponent = () => {
                         {error && <p className="text-red-500">{error}</p>} {/* Display error if any */}
                         
                         <button type="submit" className='bg-primary text-white w-full rounded-br-lg rounded-tl-lg py-2'>
-                            Login
+                          {loading ? <Spinner/> : "Login"}
                         </button>
                     </form>
 

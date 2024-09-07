@@ -17,45 +17,53 @@ const RegistrationComponent = () => {
     const [loading, setLoading] = useState(false);
 
     const handleRegister = async (e) => {
-        e.preventDefault();
+    e.preventDefault();
 
-        // Basic validation
-        if (!fullName || !email || !password || !confirmPassword || !address || !phoneNumber || !ninNumber) {
-            setError('All fields are required.');
-            return;
+    if (!fullName || !email || !password || !confirmPassword || !address || !phoneNumber || !ninNumber) {
+        setError('All fields are required.');
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        setError('Passwords do not match.');
+        return;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+        const response = await fetch('/api/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                fullName,
+                email,
+                password,
+                confirmPassword,
+                address,
+                phoneNumber,
+                ninNumber,
+            }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || 'Something went wrong');
         }
 
-        if (password !== confirmPassword) {
-            setError('Passwords do not match.');
-            return;
-        }
+        toast.success('Registered successfully');
+    } catch (error) {
+        setError('Error during registration: ' + error.message);
+        toast.error('Something went wrong');
+    } finally {
+        setLoading(false);
+    }
+};
 
-        try {
-            // Register user with Firebase Authentication
-            setLoading(true)
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
-
-            // Save additional user data to Firestore
-            await addDoc(collection(db, 'users'), {
-                uid: user.uid,
-                fullName: fullName,
-                email: email,
-                address: address,
-                phoneNumber: phoneNumber,
-                ninNumber: ninNumber,
-                createdAt: new Date(),
-            });
-
-            toast.success("Registered succesfully");
-            console.log('User registered and additional data saved');
-            setLoading(false)
-        } catch (error) {
-            setError('Error during registration: ' + error.message);
-            toast.error("something went wrong");
-            setLoading(false)
-        }
-    };
 
     return (
         <div className="container mx-auto mt-36">
