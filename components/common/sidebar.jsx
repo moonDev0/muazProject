@@ -28,7 +28,7 @@ const Sidebar = () => {
 
   const sidebarItems = [
     { text: "Dashboard", href: "/dashboard", icon: <AiOutlineAppstore /> },
-    { text: "Certificates", href: "#", icon: <FaSchool /> },
+    { text: "Certificates", href: "/certificates", icon: <FaSchool /> },
     { text: "Approved",href:"/approved", icon: <FaUsers /> },
     { text: "Pending", href:"/pending", icon: <FaTasks /> },
     { text: "Apply Now", href: "/registerLand", icon: <FaTasks /> },
