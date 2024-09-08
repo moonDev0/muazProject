@@ -50,7 +50,7 @@ const IndexDash = () => {
   return (
     <div className='  h-[100vh]  w-full bg-[#EFEFEF]'>    
                 {/* main body begins here*/}
-            <div className=' pl-[300px] xl:pr-[350px] 2xl:pr-[400px] mr-5 pt-14 text-black'>
+            <div className=' pl-[00px] xl:pr-[350px] 2xl:pr-[400px] mr-5 pt-14 text-black'>
                <div className=' mx-auto w-full flex justify-between'>
                     <h1 className=' text-[26px] font-semibold font-KumbhSan'>Dashboard</h1>
                     <div className=' flex items-center'>
@@ -146,7 +146,7 @@ const IndexDash = () => {
                     </button>
                     
                     <div>
-                        <Image src={userIcon} alt='icon' className=''/>
+                        {user?.userData?.fullName}
                     </div>
                 </div>
 

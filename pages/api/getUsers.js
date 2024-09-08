@@ -1,5 +1,5 @@
 // pages/api/getData.js
-import { db } from '@/firebaseAdmin'; 
+import { db } from "@/firebase"; 
 
 export default async function handler(req, res) {
     try {

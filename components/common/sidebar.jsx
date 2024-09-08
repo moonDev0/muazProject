@@ -16,9 +16,8 @@ import {
   FaMailBulk,
 } from "react-icons/fa";
 import { HiChatBubbleLeftRight } from "react-icons/hi2";
-import { AiOutlineAppstore, AiOutlineYoutube } from "react-icons/ai";
-import { FaFaceSmileBeam } from "react-icons/fa6";
-import { IoFootballOutline, IoLogInSharp } from "react-icons/io5";
+import { AiOutlineAppstore } from "react-icons/ai";
+import { IoLogInSharp } from "react-icons/io5";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "../../public/images/newlogo.png";
@@ -28,13 +27,13 @@ const Sidebar = () => {
   const { logout, error, loading } = useLogout();
 
   const sidebarItems = [
-    { text: "Dashboard", href: "/dashboard", icon: <AiOutlineAppstore /> },
-    { text: "certificates", href: "/dashboard/events", icon: <FaSchool /> },
+    { text: "Dashboard", href: "/dashboard/dashboard", icon: <AiOutlineAppstore /> },
+    { text: "Certificates", href: "/dashboard/events", icon: <FaSchool /> },
     { text: "Approved", icon: <FaUsers /> },
     { text: "Pending", icon: <FaTasks /> },
-    
+    { text: "Apply Now", href: "/registerLand", icon: <FaTasks /> },
     { text: "Rejected", href: "/dashboard/reminders", icon: <FaMailBulk /> },
-    { text: "emails", href: "/dashboard/reminders", icon: <HiChatBubbleLeftRight /> },
+    { text: "Emails", href: "/dashboard/reminders", icon: <HiChatBubbleLeftRight /> },
     { text: "Logs", href: "/dashboard/reminders", icon: <IoLogInSharp /> },
   ];
 
@@ -45,10 +44,10 @@ const Sidebar = () => {
   const toggleDropdown = (index) => setOpenDropdown((prev) => (prev === index ? null : index));
 
   return (
-    <div className="bg-primary pb-2 font-KumbhSan w-[250px] h-[96vh]  fixed my-3 mx-3 rounded-3xl px-8 text-white">
+    <div className="bg-primary pb-2 font-KumbhSan w-[250px] h-[96vh] fixed my-3 mx-3 rounded-3xl px-8 text-white">
       <Link href="/">
         <div className="logo w-full mt-10">
-          <Image src={logo} alt="logo" className=" h-70px] w-[70px] mx-auto" />
+          <Image src={logo} alt="logo" className="h-[70px] w-[70px] mx-auto" />
         </div>
       </Link>
       <ul className="firstUL">
@@ -112,28 +111,27 @@ const Sidebar = () => {
         ))}
       </ul>
 
+      <ul className="mt-20 text-sm font-medium ml-2">
+        <li>
+          <Link href="/profile" className="flex items-center">
+            <i className="mr-2"><FaUserEdit /></i>
+            <h1>Profile</h1>
+          </Link>
+        </li>
 
-      <ul className=" mt-20 text-sm font-medium ml-2">
-            <li className="">
-                <Link href="" className=" flex items-center">
-                    <i className=" mr-2"><FaUserEdit /></i>
-                    <h1>Profile</h1>
-                </Link>
-            </li>
+        <li className="mt-5">
+          <button onClick={logout} className="flex items-center" disabled={loading}>
+            <i className="mr-2"><FaSignOutAlt /></i>
+            <h1>{loading ? 'Signing Out...' : 'Sign Out'}</h1>
+          </button>
+          {error && <p className="text-red-500 mt-2">{error}</p>}
+        </li>
 
-            <li className=" mt-5">
-                <button onClick={logout} className=" flex items-center">
-                    <i className=" mr-2"><FaSignOutAlt /></i>
-                    <h1>Sign Out</h1>
-                </button>
-            </li>
-
-            <li className=" mt-6 mb-5">
-                <Link href="" className=" flex items-center">
-                    <i className=" mr-2"><GiResize /></i>
-                </Link>
-            </li>
-
+        <li className="mt-6 mb-5">
+          <Link href="/some-other-page" className="flex items-center">
+            <i className="mr-2"><GiResize /></i>
+          </Link>
+        </li>
       </ul>
     </div>
   );

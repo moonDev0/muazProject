@@ -1,4 +1,3 @@
-// hooks/useLogout.js
 import { useState } from 'react';
 import { getAuth, signOut } from 'firebase/auth';
 import { useRouter } from 'next/router';
@@ -6,7 +5,7 @@ import { useRouter } from 'next/router';
 const useLogout = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
-    const auth = getAuth(); // Get Firebase auth instance
+    const auth = getAuth();
     const router = useRouter();
 
     const logout = async () => {
@@ -15,12 +14,12 @@ const useLogout = () => {
 
         try {
             await signOut(auth); // Sign out the user
-            setLoading(false);
-            localStorage.clear(); 
+            localStorage.clear(); // Clear local storage
             router.push('/login'); // Redirect to login page or any other page
         } catch (err) {
-            setLoading(false);
-            setError(err.message);
+            setError(err.message); // Set the error message
+        } finally {
+            setLoading(false); // Ensure loading state is reset
         }
     };
 
