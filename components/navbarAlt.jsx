@@ -10,7 +10,7 @@ const NavbarAlt = ({ title }) => {
   return (
     <div>
       <div className='w-full flex text-black justify-between'>
-        <h1 className='font-KumbhSan font-bold text-[16px] md:text-[23px]'>title</h1>
+        <h1 className='font-KumbhSan font-bold text-[16px] md:text-[23px]'>{title}</h1>
         <div className='flex text-black gap-3 items-center justify-center'>
           <div className='rounded-full p-2 bg-[white]' >
             <span className=' text-red-500 text-[12px]'>1</span>

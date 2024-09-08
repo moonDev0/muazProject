@@ -32,7 +32,7 @@ const Sidebar = () => {
     { text: "Approved", icon: <FaUsers /> },
     { text: "Pending", icon: <FaTasks /> },
     { text: "Apply Now", href: "/registerLand", icon: <FaTasks /> },
-    { text: "Rejected", href: "/dashboard/reminders", icon: <FaMailBulk /> },
+    { text: "Rejected", href: "/rejected", icon: <FaMailBulk /> },
     { text: "Emails", href: "/dashboard/reminders", icon: <HiChatBubbleLeftRight /> },
     { text: "Users", href: "/users", icon: <IoLogInSharp /> },
     { text: "Logs", href: "/dashboard/reminders", icon: <IoLogInSharp /> },

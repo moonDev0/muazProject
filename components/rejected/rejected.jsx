@@ -3,7 +3,7 @@ import NavbarAlt from "../navbarAlt";
 import Table from "../UIcomponents/Table";
 import { HiOutlineSearch } from "react-icons/hi";
 
-const UsersComponents = () => {
+const RejectedComponents = () => {
   const [loading, setLoading] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [rowData, setRowData] = useState(null);
@@ -39,7 +39,7 @@ const UsersComponents = () => {
 
   return (
     <div className="pl-[300px] pt-10 mr-20">
-      <NavbarAlt title="Users" />
+      <NavbarAlt title="Rejected Lands" />
 
       <div className="relative">
         <input
@@ -90,4 +90,4 @@ const UsersComponents = () => {
   );
 };
 
-export default UsersComponents;
+export default RejectedComponents;
