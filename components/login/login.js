@@ -54,25 +54,8 @@ const LoginComponent = () => {
     
     const handleLoginWithGoogle = async () => {
         try {
-            const result = await signInWithPopup(auth, provider);
-            const idToken = await result.user.getIdToken(); // Get the ID token
-            
-            const response = await fetch('/api/login-google', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ idToken }),
-            });
-    
-            const data = await response.json();
-    
-            if (!response.ok) {
-                throw new Error(data.message || 'Google login failed');
-            }
-    
-            setUser(data.user); // Save user in the store
-            router.push('/dashboard');
+            await signInWithPopup(auth, provider);
+            router.push("/dashboard");
         } catch (error) {
             console.log('Error during login with Google:', error);
         }
