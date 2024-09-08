@@ -27,7 +27,7 @@ const Sidebar = () => {
   const { logout, error, loading } = useLogout();
 
   const sidebarItems = [
-    { text: "Dashboard", href: "/dashboard/dashboard", icon: <AiOutlineAppstore /> },
+    { text: "Dashboard", href: "/dashboard", icon: <AiOutlineAppstore /> },
     { text: "Certificates", href: "/dashboard/events", icon: <FaSchool /> },
     { text: "Approved", icon: <FaUsers /> },
     { text: "Pending", icon: <FaTasks /> },
