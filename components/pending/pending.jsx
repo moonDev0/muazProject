@@ -1,14 +1,16 @@
-"use client";
 import React, { useEffect, useState } from "react";
 import NavbarAlt from "../navbarAlt";
 import Table from "../UIcomponents/Table";
-import { HiOutlineSearch } from "react-icons/hi";
+import { HiOutlineSearch, LiaTimesSolid } from "react-icons/hi";
 import { getDocs, collection } from 'firebase/firestore';
 import { db } from '@/firebase'; // Import Firebase Firestore
+import ModalContainerAlt from "../common/modalContainerAlt";
+import AddStaff from "../UIcomponents/AddStaff";
 
 const PendingComponents = () => {
   const [loading, setLoading] = useState(false);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  // const [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState({ modalName: "", showModal: false });
   const [rowData, setRowData] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [data, setData] = useState([]);
@@ -55,6 +57,13 @@ const PendingComponents = () => {
     fetchData();
   }, []);
 
+  const  closeModal = ()=>{
+    setOpenModal({
+      modalName: "", 
+      showModal: false
+    })
+  }
+
   return (
     <div className="pl-[300px] pt-10 mr-20">
       <NavbarAlt title="Pending Land Certificates" />
@@ -84,7 +93,7 @@ const PendingComponents = () => {
           options={{
             variant: "primary",
             tableStyle: "",
-            allowSorting: false,
+            allowSorting: true,
             allowActions: true, // Enabling actions
             actions: {
               edit: true,
@@ -93,18 +102,16 @@ const PendingComponents = () => {
             },
           }}
           setRowData={setRowData}
-          setOpenModal={setModalIsOpen}
+          setOpenModal={setOpenModal}
           loading={loading}
         />
       </div>
 
-      {modalIsOpen && (
-        <div>
-          {/* You can use a modal component here to display rowData */}
-          <p>{`Modal Open for ${rowData?.fullName}`}</p>
-          <button onClick={() => setModalIsOpen(false)}>Close Modal</button>
-        </div>
-      )}
+      {openModal.modalName === "edit" && openModal?.showModal && (
+                <ModalContainerAlt>
+                  <AddStaff mode="edit"  closeModal={closeModal}/>
+                </ModalContainerAlt>
+            )}
     </div>
   );
 };
