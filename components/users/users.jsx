@@ -1,21 +1,16 @@
-import React, { useState } from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import NavbarAlt from "../navbarAlt";
 import Table from "../UIcomponents/Table";
 import { HiOutlineSearch } from "react-icons/hi";
+import axios from "axios";
 
 const UsersComponents = () => {
   const [loading, setLoading] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [rowData, setRowData] = useState(null);
+  const [data, setData] = useState([])
   const [searchQuery, setSearchQuery] = useState("");
-
-  const users = [
-    { firstName: "Student", lastName: "Name1", email: "user1@example.com" },
-    { firstName: "Student", lastName: "Name2", email: "user2@example.com" },
-    { firstName: "Student", lastName: "Name3", email: "user3@example.com" },
-    { firstName: "Student", lastName: "Name4", email: "user4@example.com" },
-    { firstName: "Student", lastName: "Name5", email: "user5@example.com" },
-  ];
 
   // Function to handle deleting a user
   const handleDelete = (user) => {
@@ -36,9 +31,30 @@ const UsersComponents = () => {
     setRowData(user);
     setModalIsOpen(true); // Example: Open a modal for viewing
   };
+  
+
+  useEffect(() => { 
+        const fetchData = async () => {
+          setLoading(true)
+            try {
+                const response = await axios.get('/api/getAllUser');
+                setData(response.data);
+                setLoading(false);
+                console.log(response.data)
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+
+
 
   return (
-    <div className="pl-[300px] pt-10 mr-20">
+    <div className="pl-[300px] pt-10 mr-20" >
       <NavbarAlt title="Users" />
 
       <div className="relative">
@@ -56,11 +72,11 @@ const UsersComponents = () => {
       <div className="mt-10">
         <Table
           header={[
-            { name: "First Name", identifier: "firstName" },
-            { name: "Last Name", identifier: "lastName" },
+            { name: "Full Name", identifier: "fullName" },
+            { name: "Phone Number", identifier: "phoneNumber" },
             { name: "Email", identifier: "email" },
           ]}
-          data={users}
+          data={data}
           searchQuery={searchQuery} // Filter the table based on the search
           options={{
             variant: "primary",
