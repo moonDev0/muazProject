@@ -59,7 +59,7 @@ const RegisterLandComponent = () => {
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({
-                            uid:auth?.currentUser?.uid,
+                            uid:auth.currentUser.uid,
                             fullName,
                             email,
                             address,
