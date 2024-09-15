@@ -1,21 +1,17 @@
-import React, { useState } from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import NavbarAlt from "../navbarAlt";
 import Table from "../UIcomponents/Table";
 import { HiOutlineSearch } from "react-icons/hi";
+import { getDocs, collection } from 'firebase/firestore';
+import { db } from '@/firebase'; // Import Firebase Firestore
 
-const ApprovedComponents = () => {
+const ApprovedComponent = () => {
   const [loading, setLoading] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [rowData, setRowData] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-
-  const users = [
-    { firstName: "Student", lastName: "Name1", email: "user1@example.com" },
-    { firstName: "Student", lastName: "Name2", email: "user2@example.com" },
-    { firstName: "Student", lastName: "Name3", email: "user3@example.com" },
-    { firstName: "Student", lastName: "Name4", email: "user4@example.com" },
-    { firstName: "Student", lastName: "Name5", email: "user5@example.com" },
-  ];
+  const [data, setData] = useState([]);
 
   // Function to handle deleting a user
   const handleDelete = (user) => {
@@ -37,6 +33,28 @@ const ApprovedComponents = () => {
     setModalIsOpen(true); // Example: Open a modal for viewing
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        // Fetching data from Firestore collection 'Lands'
+        const querySnapshot = await getDocs(collection(db, 'Lands'));
+        const dataList = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setData(dataList);
+        setLoading(false);
+        console.log(dataList); // View fetched data
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div className="pl-[300px] pt-10 mr-20">
       <NavbarAlt title="Approved Lands" />
@@ -56,11 +74,12 @@ const ApprovedComponents = () => {
       <div className="mt-10">
         <Table
           header={[
-            { name: "First Name", identifier: "firstName" },
-            { name: "Last Name", identifier: "lastName" },
+            { name: "Owner", identifier: "fullName" },
+            { name: "Phone Number", identifier: "phoneNumber" },
+            { name: "Status", identifier: "status" },
             { name: "Email", identifier: "email" },
           ]}
-          data={users}
+          data={data.filter((item, index)=> item.status == "approved")}
           searchQuery={searchQuery} // Filter the table based on the search
           options={{
             variant: "primary",
@@ -82,7 +101,7 @@ const ApprovedComponents = () => {
       {modalIsOpen && (
         <div>
           {/* You can use a modal component here to display rowData */}
-          <p>{`Modal Open for ${rowData?.firstName} ${rowData?.lastName}`}</p>
+          <p>{`Modal Open for ${rowData?.fullName}`}</p>
           <button onClick={() => setModalIsOpen(false)}>Close Modal</button>
         </div>
       )}
@@ -90,4 +109,4 @@ const ApprovedComponents = () => {
   );
 };
 
-export default ApprovedComponents;
+export default ApprovedComponent;

@@ -10,6 +10,9 @@ import { useRouter } from 'next/router';
 import useUserStore from '@/store/useStore';
 import { toast } from 'react-toastify';
 import Spinner from '@/lib/spinner';
+import { getDoc, doc } from 'firebase/firestore'; // Import Firestore functions
+import { db } from '@/firebase'; // Import your Firestore instance
+
 
 const LoginComponent = () => {
     const router = useRouter();
@@ -19,34 +22,73 @@ const LoginComponent = () => {
     const [loading, setLoading] = useState(false);
     const { saveuser } = useUserStore();
   
-    const handleLoginWithEmail = async (e) => {
-        e.preventDefault();
+    // const handleLoginWithEmail = async (e) => {
+    //     e.preventDefault();
     
-        try {
-            setLoading(true);
+    //     try {
+    //         setLoading(true);
 
-            // Set auth persistence to local
-            await setPersistence(auth, browserLocalPersistence);
+    //         // Set auth persistence to local
+    //         await setPersistence(auth, browserLocalPersistence);
 
-            // Perform the email/password login
-            const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
+    //         // Perform the email/password login
+    //         const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    //         const user = userCredential.user;
 
-            if (!user) {
-                throw new Error('User not found');
-            }
+    //         if (!user) {
+    //             throw new Error('User not found');
+    //         }
 
-            saveuser(user);
-            setLoading(false);
+    //         saveuser(user);
+    //         setLoading(false);
 
-            toast.success(`Welcome ${user.email}`);
-            router.push('/dashboard');
-        } catch (error) {
-            setError(error.message);
-            setLoading(false);
-            console.log('Error during email/password login:', error);
+    //         toast.success(`Welcome ${user.email}`);
+    //         router.push('/dashboard');
+    //     } catch (error) {
+    //         setError(error.message);
+    //         setLoading(false);
+    //         console.log('Error during email/password login:', error);
+    //     }
+    // };
+
+const handleLoginWithEmail = async (e) => {
+    e.preventDefault();
+    
+    try {
+        setLoading(true);
+
+        // Set auth persistence to local
+        await setPersistence(auth, browserLocalPersistence);
+
+        // Perform the email/password login
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        if (!user) {
+            throw new Error('User not found');
         }
-    };
+
+        // Query Firestore to get the user's data
+        const userDocRef = doc(db, 'users', user.uid);
+        const userDoc = await getDoc(userDocRef);
+
+        if (userDoc.exists()) {
+            const userData = userDoc.data();
+            // Save the user and the Firestore data into your store
+            saveuser({ ...user, ...userData }); 
+            toast.success(`Welcome ${userData.fullName || user.email}`);
+        } else {
+            throw new Error('User data not found in Firestore');
+        }
+
+        setLoading(false);
+        router.push('/dashboard');
+    } catch (error) {
+        setError(error.message);
+        setLoading(false);
+        console.log('Error during email/password login:', error);
+    }
+};
     
     const handleLoginWithGoogle = async () => {
         try {

@@ -3,13 +3,14 @@ import React, { useEffect, useState } from "react";
 import NavbarAlt from "../navbarAlt";
 import Table from "../UIcomponents/Table";
 import { HiOutlineSearch } from "react-icons/hi";
-import axios from "axios";
+import { getDocs, collection } from 'firebase/firestore';
+import { db } from '@/firebase'; // Import Firebase Firestore
 
 const UsersComponents = () => {
   const [loading, setLoading] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [rowData, setRowData] = useState(null);
-  const [data, setData] = useState([])
+  const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
   // Function to handle deleting a user
@@ -31,30 +32,31 @@ const UsersComponents = () => {
     setRowData(user);
     setModalIsOpen(true); // Example: Open a modal for viewing
   };
-  
 
-  useEffect(() => { 
-        const fetchData = async () => {
-          setLoading(true)
-            try {
-                const response = await axios.get('/api/getAllUser');
-                setData(response.data);
-                setLoading(false);
-                console.log(response.data)
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                setLoading(false);
-            }
-        };
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        // Fetching data from Firestore collection 'users'
+        const querySnapshot = await getDocs(collection(db, 'users'));
+        const dataList = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setData(dataList);
+        setLoading(false);
+        console.log(dataList); // View fetched data
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      }
+    };
 
-        fetchData();
-    }, []);
-
-
-
+    fetchData();
+  }, []);
 
   return (
-    <div className="pl-[300px] pt-10 mr-20" >
+    <div className="pl-[300px] pt-10 mr-20">
       <NavbarAlt title="Users" />
 
       <div className="relative">

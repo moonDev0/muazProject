@@ -1,23 +1,17 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import NavbarAlt from "../navbarAlt";
 import Table from "../UIcomponents/Table";
 import { HiOutlineSearch } from "react-icons/hi";
-import axios from "axios";
+import { getDocs, collection } from 'firebase/firestore';
+import { db } from '@/firebase'; // Import Firebase Firestore
 
 const PendingComponents = () => {
   const [loading, setLoading] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [rowData, setRowData] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [data, setData]=useState([])
-
-  const users = [
-    { firstName: "Student", lastName: "Name1", email: "user1@example.com" },
-    { firstName: "Student", lastName: "Name2", email: "user2@example.com" },
-    { firstName: "Student", lastName: "Name3", email: "user3@example.com" },
-    { firstName: "Student", lastName: "Name4", email: "user4@example.com" },
-    { firstName: "Student", lastName: "Name5", email: "user5@example.com" },
-  ];
+  const [data, setData] = useState([]);
 
   // Function to handle deleting a user
   const handleDelete = (user) => {
@@ -39,23 +33,27 @@ const PendingComponents = () => {
     setModalIsOpen(true); // Example: Open a modal for viewing
   };
 
-  
-  useEffect(() => { 
-        const fetchData = async () => {
-          setLoading(true)
-            try {
-                const response = await axios.get('/api/getAllLands');
-                setData(response.data);
-                setLoading(false);
-                console.log(response.data)
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                setLoading(false);
-            }
-        };
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        // Fetching data from Firestore collection 'Lands'
+        const querySnapshot = await getDocs(collection(db, 'Lands'));
+        const dataList = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setData(dataList);
+        setLoading(false);
+        console.log(dataList); // View fetched data
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      }
+    };
 
-        fetchData();
-    }, []);
+    fetchData();
+  }, []);
 
   return (
     <div className="pl-[300px] pt-10 mr-20">
@@ -76,12 +74,12 @@ const PendingComponents = () => {
       <div className="mt-10">
         <Table
           header={[
-            { name: "owner", identifier: "fullName" },
+            { name: "Owner", identifier: "fullName" },
             { name: "Phone Number", identifier: "phoneNumber" },
             { name: "Status", identifier: "status" },
             { name: "Email", identifier: "email" },
           ]}
-          data={data}
+          data={data.filter((item, index)=> item.status == "pending")}
           searchQuery={searchQuery} // Filter the table based on the search
           options={{
             variant: "primary",
@@ -103,7 +101,7 @@ const PendingComponents = () => {
       {modalIsOpen && (
         <div>
           {/* You can use a modal component here to display rowData */}
-          <p>{`Modal Open for ${rowData?.firstName} ${rowData?.lastName}`}</p>
+          <p>{`Modal Open for ${rowData?.fullName}`}</p>
           <button onClick={() => setModalIsOpen(false)}>Close Modal</button>
         </div>
       )}
