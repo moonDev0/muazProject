@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavbarAlt from "../navbarAlt";
 import Table from "../UIcomponents/Table";
 import { HiOutlineSearch } from "react-icons/hi";
+import axios from "axios";
 
 const PendingComponents = () => {
   const [loading, setLoading] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [rowData, setRowData] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [data, setData]=useState([])
 
   const users = [
     { firstName: "Student", lastName: "Name1", email: "user1@example.com" },
@@ -37,6 +39,24 @@ const PendingComponents = () => {
     setModalIsOpen(true); // Example: Open a modal for viewing
   };
 
+  
+  useEffect(() => { 
+        const fetchData = async () => {
+          setLoading(true)
+            try {
+                const response = await axios.get('/api/getAllLands');
+                setData(response.data);
+                setLoading(false);
+                console.log(response.data)
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
+
   return (
     <div className="pl-[300px] pt-10 mr-20">
       <NavbarAlt title="Pending Land Certificates" />
@@ -56,11 +76,12 @@ const PendingComponents = () => {
       <div className="mt-10">
         <Table
           header={[
-            { name: "First Name", identifier: "firstName" },
-            { name: "Last Name", identifier: "lastName" },
+            { name: "owner", identifier: "fullName" },
+            { name: "Phone Number", identifier: "phoneNumber" },
+            { name: "Status", identifier: "status" },
             { name: "Email", identifier: "email" },
           ]}
-          data={users}
+          data={data}
           searchQuery={searchQuery} // Filter the table based on the search
           options={{
             variant: "primary",
