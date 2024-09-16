@@ -8,7 +8,7 @@ export default async function handler(req, res) {
         return res.status(405).json({ message: 'Method not allowed' });
     }
 
-    const { fullName, email, password, confirmPassword, address, phoneNumber, ninNumber } = req.body;
+    const { fullName, email, password, confirmPassword, address, phoneNumber, ninNumber, role } = req.body;
 
     if (!fullName || !email || !password || !confirmPassword || !address || !phoneNumber || !ninNumber) {
         return res.status(400).json({ message: 'All fields are required' });
@@ -27,6 +27,7 @@ export default async function handler(req, res) {
         await addDoc(collection(db, 'users'), {
             uid: user.uid,
             fullName,
+            role,
             email,
             address,
             phoneNumber,

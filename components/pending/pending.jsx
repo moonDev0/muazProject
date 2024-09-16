@@ -63,6 +63,7 @@ const PendingComponents = () => {
       showModal: false
     })
   }
+  console.log(data)
 
   return (
     <div className="pl-[300px] pt-10 mr-20">
@@ -109,9 +110,15 @@ const PendingComponents = () => {
 
       {openModal.modalName === "edit" && openModal?.showModal && (
                 <ModalContainerAlt>
-                  <AddStaff mode="edit"  closeModal={closeModal}/>
+                  <AddStaff mode="edit" rowData={rowData}  closeModal={closeModal}/>
                 </ModalContainerAlt>
             )}
+
+     {openModal.modalName === "view" && openModal?.showModal && (
+              <ModalContainerAlt>
+                <AddStaff mode="view" rowData={rowData}  closeModal={closeModal}/>
+              </ModalContainerAlt>
+          )}
     </div>
   );
 };

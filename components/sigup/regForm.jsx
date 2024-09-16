@@ -15,6 +15,7 @@ const RegistrationComponent = () => {
     const [ninNumber, setNinNumber] = useState('');
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [role, setRole] = useState('user')
 
     const handleRegister = async (e) => {
     e.preventDefault();
@@ -39,6 +40,7 @@ const RegistrationComponent = () => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
+                role,
                 fullName,
                 email,
                 password,
