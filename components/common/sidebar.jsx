@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { GiResize } from "react-icons/gi";
 import useLogout from "@/hooks/loggout";
@@ -21,12 +21,15 @@ import { IoLogInSharp } from "react-icons/io5";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "../../public/images/newlogo.png";
+import useUserStore from "@/store/useStore";
 
 const Sidebar = () => {
   const router = useRouter();
   const { logout, error, loading } = useLogout();
+  const{user}=useUserStore()
+  const [sidebarItems, setSidebarItems]=useState([])
 
-  const sidebarItems = [
+  const AD = [
     { text: "Dashboard", href: "/dashboard", icon: <AiOutlineAppstore /> },
     { text: "Certificates", href: "/certificates", icon: <FaSchool /> },
     { text: "Approved",href:"/approved", icon: <FaUsers /> },
@@ -37,6 +40,28 @@ const Sidebar = () => {
     { text: "Users", href: "/users", icon: <IoLogInSharp /> },
     { text: "Logs", href: "#", icon: <IoLogInSharp /> },
   ];
+
+  const ST = [
+    { text: "Dashboard", href: "/dashboard", icon: <AiOutlineAppstore /> },
+    { text: "Certificates", href: "/certificates", icon: <FaSchool /> },
+    { text: "Approved",href:"/approved", icon: <FaUsers /> },
+    { text: "Pending", href:"/pending", icon: <FaTasks /> },
+    { text: "Apply Now", href: "/registerLand", icon: <FaTasks /> },
+    { text: "Rejected", href: "/rejected", icon: <FaMailBulk /> },
+  ];
+
+  useEffect(() => {
+    switch (user?.role) {
+      case 'Admin':
+        setSidebarItems(AD);
+        break;
+      case 'user':
+        setSidebarItems(ST);
+        break;
+      default:
+        setSidebarItems([]);
+    }
+  }, [user]);
 
   const [openDropdown, setOpenDropdown] = useState(null);
 
