@@ -1,45 +1,56 @@
-import React, { useState } from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import NavbarAlt from "../navbarAlt";
 import Table from "../UIcomponents/Table";
 import { HiOutlineSearch } from "react-icons/hi";
+import { getDocs, collection } from 'firebase/firestore';
+import { db } from '@/firebase'; // Import Firebase Firestore
+import ModalContainerAlt from "../common/modalContainerAlt";
+import LandOwnershipCertificate from "../UIcomponents/landCert";
+import FullModalContainer from "../common/FullModalContainer";
 
 const CertificatesComponents = () => {
   const [loading, setLoading] = useState(false);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [openModal, setOpenModal] = useState({ modalName: "", showModal: false });
   const [rowData, setRowData] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-
-  const users = [
-    { firstName: "Student", lastName: "Name1", email: "user1@example.com" },
-    { firstName: "Student", lastName: "Name2", email: "user2@example.com" },
-    { firstName: "Student", lastName: "Name3", email: "user3@example.com" },
-    { firstName: "Student", lastName: "Name4", email: "user4@example.com" },
-    { firstName: "Student", lastName: "Name5", email: "user5@example.com" },
-  ];
-
-  // Function to handle deleting a user
-  const handleDelete = (user) => {
-    console.log("Deleting user:", user);
-    // Add actual delete logic here, such as updating state or making an API call
-  };
-
-  // Function to handle editing a user
-  const handleEdit = (user) => {
-    console.log("Editing user:", user);
-    setRowData(user);
-    setModalIsOpen(true); // Example: Open a modal for editing
-  };
+  const [data, setData] = useState([]);
 
   // Function to handle viewing a user
   const handleView = (user) => {
     console.log("Viewing user:", user);
     setRowData(user);
-    setModalIsOpen(true); // Example: Open a modal for viewing
+    setOpenModal({ modalName: "view", showModal: true }); // Update this line
   };
+
+  const closeModal = () => {
+    setOpenModal({ modalName: "", showModal: false }); // Function to close the modal
+    setRowData(null); // Clear the row data if needed
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const querySnapshot = await getDocs(collection(db, 'Lands'));
+        const dataList = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setData(dataList);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="pl-[300px] pt-10 mr-20">
-      <NavbarAlt title="Certificates of land ownership" />
+      <NavbarAlt title="Land Ownership Certificates" />
 
       <div className="relative">
         <input
@@ -56,17 +67,18 @@ const CertificatesComponents = () => {
       <div className="mt-10">
         <Table
           header={[
-            { name: "First Name", identifier: "firstName" },
-            { name: "Last Name", identifier: "lastName" },
+            { name: "Owner", identifier: "fullName" },
+            { name: "Phone Number", identifier: "phoneNumber" },
+            { name: "Status", identifier: "status" },
             { name: "Email", identifier: "email" },
           ]}
-          data={users}
-          searchQuery={searchQuery} // Filter the table based on the search
+          data={data.filter(item => item.status === "approved")}
+          searchQuery={searchQuery}
           options={{
             variant: "primary",
             tableStyle: "",
             allowSorting: false,
-            allowActions: true, // Enabling actions
+            allowActions: true,
             actions: {
               edit: true,
               view: true,
@@ -74,17 +86,14 @@ const CertificatesComponents = () => {
             },
           }}
           setRowData={setRowData}
-          setOpenModal={setModalIsOpen}
+          setOpenModal={setOpenModal}
           loading={loading}
+          handleView={handleView} // Make sure to pass this to your Table component if needed
         />
       </div>
 
-      {modalIsOpen && (
-        <div>
-          {/* You can use a modal component here to display rowData */}
-          <p>{`Modal Open for ${rowData?.firstName} ${rowData?.lastName}`}</p>
-          <button onClick={() => setModalIsOpen(false)}>Close Modal</button>
-        </div>
+      {openModal.showModal && openModal.modalName === "view" && (
+        <FullModalContainer rowData={rowData} message="Click confirm to view certificate" handleCancel={closeModal}/>
       )}
     </div>
   );

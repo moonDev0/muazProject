@@ -155,14 +155,14 @@ const Dashboard = () => {
                 </div>
 
                 <div className=' my-2'>
-                    <h1 className=' font-bold text-[21px]'>Messages</h1>
+                    <h1 className=' font-bold text-[21px]'>Notifications</h1>
 
                     <div className=' ml-5 font-poppins'>
                         <div className=' mt-4 flex gap-4  items-center'>
                             <div className="icon mb-4 text-black bg-[#C1BBEB] rounded-full w-[50px] h-[40px]"></div>  
                             <div className=' h-full mt-[-10px] w-full'>
                                 <div className=' flex gap-10 w-full items-center justify-between'>
-                                <h2 className=' text-[#303972] font-semibold text-[12.7px] font-poppins'>Samantha William</h2>
+                                <h2 className=' text-[#303972] font-semibold text-[12.7px] font-poppins'>demo User</h2>
                                 <h2  className=' text-black font-semibold text-[12.7px] font-poppins'>12:45 PM</h2>
                                 </div>
                                 <p className=' text-[12.7px]'>Lorem ipsum dolor sit amet...</p>
@@ -175,7 +175,7 @@ const Dashboard = () => {
                             <div className="icon mb-4 text-black bg-[#C1BBEB] rounded-full w-[50px] h-[40px]"></div>  
                             <div className=' h-full mt-[-10px] w-full'>
                                 <div className=' flex gap-10 w-full items-center justify-between'>
-                                <h2 className=' text-[#303972] font-semibold text-[12.7px] font-poppins'>Samantha William</h2>
+                                <h2 className=' text-[#303972] font-semibold text-[12.7px] font-poppins'>demo User</h2>
                                 <h2  className=' text-black font-semibold text-[12.7px] font-poppins'>12:45 PM</h2>
                                 </div>
                                 <p className=' text-[12.7px]'>Lorem ipsum dolor sit amet...</p>
@@ -187,7 +187,7 @@ const Dashboard = () => {
                             <div className="icon mb-4 text-black bg-[#C1BBEB] rounded-full w-[50px] h-[40px]"></div>  
                             <div className=' h-full mt-[-10px] w-full'>
                                 <div className=' flex gap-10 items-center w-full justify-between'>
-                                <h2 className=' text-[#303972] font-semibold text-[12.7px] font-poppins'>Samantha William</h2>
+                                <h2 className=' text-[#303972] font-semibold text-[12.7px] font-poppins'>demo User</h2>
                                 <h2  className=' text-black font-semibold text-[12.7px] font-poppins'>12:45 PM</h2>
                                 </div>
                                 <p className=' text-[12.7px]'>Lorem ipsum dolor sit amet...</p>
@@ -199,7 +199,7 @@ const Dashboard = () => {
                             <div className="icon mb-4 text-black bg-[#C1BBEB] rounded-full w-[50px] h-[40px]"></div>  
                             <div className=' h-full mt-[-10px] w-full'>
                                 <div className=' flex gap-10 w-full items-center justify-between'>
-                                    <h2 className=' text-[#303972] font-semibold text-[12.7px] font-poppins'>Samantha William</h2>
+                                    <h2 className=' text-[#303972] font-semibold text-[12.7px] font-poppins'>demo User</h2>
                                     <h2  className=' text-black font-semibold text-[12.7px] font-poppins'>12:45 PM</h2>
                                 </div>
                                 <p className=' text-[12.7px]'>Lorem ipsum dolor sit amet...</p>
@@ -229,7 +229,7 @@ const Dashboard = () => {
                             </div>
 
                             <div className=' mt-5'>
-                                <p className=' text-[11px] font-semibold'>Karen Hope moved task “ <span className=' text-[#FB7D5B]'>User Research</span> “ from On Progress to Done</p>
+                                <p className=' text-[11px] font-semibold'>Demo User moved Status “ <span className=' text-[#FB7D5B]'>Approved</span> “ from On Pending to Approved</p>
                                 <p className=' font-medium text-[#A098AE] mt-2 text-[11px]'>2 March 2021, 13:45 PM</p>
                             </div>
 
@@ -243,7 +243,7 @@ const Dashboard = () => {
                             </div>
 
                             <div className=' mt-5'>
-                                <p className=' text-[11px] font-semibold'>Karen Hope moved task “ <span className=' text-[#FB7D5B]'>User Research</span> “ from On Progress to Done</p>
+                                <p className=' text-[11px] font-semibold'>Demo User moved Status “ <span className=' text-[#FB7D5B]'>Approved</span> “ from On Pending to Approved</p>
                                 <p className=' font-medium text-[#A098AE] mt-2 text-[11px]'>2 March 2021, 13:45 PM</p>
                             </div>
 
@@ -257,7 +257,7 @@ const Dashboard = () => {
                             </div>
 
                             <div className=' mt-5'>
-                                <p className=' text-[11px] font-semibold'>Karen Hope moved task “ <span className=' text-[#FB7D5B]'>User Research</span> “ from On Progress to Done</p>
+                                <p className=' text-[11px] font-semibold'>Demo User moved Status “ <span className=' text-[#FB7D5B]'>Approved</span> “ from On Pending to Approved</p>
                                 <p className=' font-medium text-[#A098AE] mt-2 text-[11px]'>2 March 2021, 13:45 PM</p>
                             </div>
 

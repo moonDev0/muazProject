@@ -5,7 +5,7 @@ import Loader from "@/lib/loader";
 
 function ConfirmationModal({ handleCancel, handleConfirm, message, loading }) {
   return (
-    <div className="p-4 text-center">
+    <div className="p-4 fixed bg-blue-400 text-center">
       <p className="text-[15px] text-black">{message}</p>
       {console.log(message)}
       <div className="flex gap-4 justify-center items-center mt-4">
