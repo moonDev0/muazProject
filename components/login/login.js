@@ -22,35 +22,6 @@ const LoginComponent = () => {
     const [loading, setLoading] = useState(false);
     const { saveuser } = useUserStore();
   
-    // const handleLoginWithEmail = async (e) => {
-    //     e.preventDefault();
-    
-    //     try {
-    //         setLoading(true);
-
-    //         // Set auth persistence to local
-    //         await setPersistence(auth, browserLocalPersistence);
-
-    //         // Perform the email/password login
-    //         const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    //         const user = userCredential.user;
-
-    //         if (!user) {
-    //             throw new Error('User not found');
-    //         }
-
-    //         saveuser(user);
-    //         setLoading(false);
-
-    //         toast.success(`Welcome ${user.email}`);
-    //         router.push('/dashboard');
-    //     } catch (error) {
-    //         setError(error.message);
-    //         setLoading(false);
-    //         console.log('Error during email/password login:', error);
-    //     }
-    // };
-
 const handleLoginWithEmail = async (e) => {
     e.preventDefault();
     
@@ -63,14 +34,17 @@ const handleLoginWithEmail = async (e) => {
         // Perform the email/password login
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
+       
 
         if (!user) {
             throw new Error('User not found');
         }
 
         // Query Firestore to get the user's data
+        console.log("User UID:", user.uid);
         const userDocRef = doc(db, 'users', user.uid);
         const userDoc = await getDoc(userDocRef);
+        
 
         if (userDoc.exists()) {
             const userData = userDoc.data();

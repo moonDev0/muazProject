@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { auth, db } from '../../firebase'; // Import auth and Firestore
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { collection, addDoc } from 'firebase/firestore';
+import { setDoc, doc } from 'firebase/firestore'; // Use setDoc and doc
 import { toast } from 'react-toastify';
 import Spinner from '@/lib/spinner';
 
@@ -15,57 +15,47 @@ const RegistrationComponent = () => {
     const [ninNumber, setNinNumber] = useState('');
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [role, setRole] = useState('user')
+    const [role, setRole] = useState('user');
 
     const handleRegister = async (e) => {
-    e.preventDefault();
+        e.preventDefault();
 
-    if (!fullName || !email || !password || !confirmPassword || !address || !phoneNumber || !ninNumber) {
-        setError('All fields are required.');
-        return;
-    }
+        if (!fullName || !email || !password || !confirmPassword || !address || !phoneNumber || !ninNumber) {
+            setError('All fields are required.');
+            return;
+        }
 
-    if (password !== confirmPassword) {
-        setError('Passwords do not match.');
-        return;
-    }
+        if (password !== confirmPassword) {
+            setError('Passwords do not match.');
+            return;
+        }
 
-    setLoading(true);
-    setError(null);
+        setLoading(true);
+        setError(null);
 
-    try {
-        const response = await fetch('/api/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                role,
+        try {
+            // Register the user with Firebase Authentication
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+
+            // Store user data in Firestore with their UID as the document ID
+            await setDoc(doc(db, 'users', user.uid), {
                 fullName,
                 email,
-                password,
-                confirmPassword,
                 address,
                 phoneNumber,
                 ninNumber,
-            }),
-        });
+                role,
+            });
 
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.message || 'Something went wrong');
+            toast.success('Registered successfully');
+        } catch (error) {
+            setError('Error during registration: ' + error.message);
+            toast.error('Something went wrong');
+        } finally {
+            setLoading(false);
         }
-
-        toast.success('Registered successfully');
-    } catch (error) {
-        setError('Error during registration: ' + error.message);
-        toast.error('Something went wrong');
-    } finally {
-        setLoading(false);
-    }
-};
-
+    };
 
     return (
         <div className="container mx-auto mt-36">
@@ -150,9 +140,7 @@ const RegistrationComponent = () => {
                 </div>
                 {error && <p className="text-red-500">{error}</p>}
                 <button type="submit" className="bg-blue-500 text-white p-2 w-full">
-                  {
-                    loading ? <Spinner/> :   "Register Now"
-                  }
+                    {loading ? <Spinner /> : "Register Now"}
                 </button>
             </form>
         </div>
