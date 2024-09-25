@@ -12,6 +12,7 @@ const RegisterLandComponent = () => {
     const [ninNumber, setNinNumber] = useState('');
     const [latitude, setLatitude] = useState(''); // State for latitude
     const [longitude, setLongitude] = useState(''); // State for longitude
+    const [size, setSize] = useState(''); // State for land size
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const [image, setImage] = useState(null);
@@ -22,7 +23,7 @@ const RegisterLandComponent = () => {
     const handleRegister = async (e) => {
         e.preventDefault();
 
-        if (!fullName || !email || !address || !phoneNumber || !ninNumber || !latitude || !longitude) {
+        if (!fullName || !email || !address || !phoneNumber || !ninNumber || !latitude || !longitude || !size) {
             setError('All fields are required.');
             return;
         }
@@ -40,37 +41,18 @@ const RegisterLandComponent = () => {
             const storageRef1 = ref(storage, `images/${image.name}`);
             const storageRef2 = ref(storage, `images/${image1.name}`);
 
-            // Upload the first image
-            const uploadTask1 = uploadBytesResumable(storageRef1, image);
-            const uploadTask2 = uploadBytesResumable(storageRef2, image1);
+            // Upload both images concurrently using Promise.all
+            const [uploadTaskSnapshot1, uploadTaskSnapshot2] = await Promise.all([
+                uploadBytesResumable(storageRef1, image),
+                uploadBytesResumable(storageRef2, image1),
+            ]);
 
-            // Handle first upload
-            const downloadURL = await new Promise((resolve, reject) => {
-                uploadTask1.on(
-                    'state_changed',
-                    null,
-                    (error) => reject(error),
-                    async () => {
-                        const downloadURL = await getDownloadURL(uploadTask1.snapshot.ref);
-                        setImageUrl(downloadURL);
-                        resolve(downloadURL);
-                    }
-                );
-            });
+            // Get download URLs for both images
+            const downloadURL = await getDownloadURL(uploadTaskSnapshot1.ref);
+            const downloadURL1 = await getDownloadURL(uploadTaskSnapshot2.ref);
 
-            // Handle second upload
-            const downloadURL1 = await new Promise((resolve, reject) => {
-                uploadTask2.on(
-                    'state_changed',
-                    null,
-                    (error) => reject(error),
-                    async () => {
-                        const downloadURL1 = await getDownloadURL(uploadTask2.snapshot.ref);
-                        setImageUrl1(downloadURL1);
-                        resolve(downloadURL1);
-                    }
-                );
-            });
+            setImageUrl(downloadURL);
+            setImageUrl1(downloadURL1);
 
             // Proceed with user registration
             const response = await fetch('/api/registerLand', {
@@ -87,6 +69,7 @@ const RegisterLandComponent = () => {
                     ninNumber,
                     latitude,
                     longitude,
+                    size, // include size in the request
                     imageUrl: downloadURL,
                     imageUrl1: downloadURL1,
                 }),
@@ -185,6 +168,18 @@ const RegisterLandComponent = () => {
                         id="longitude"
                         value={longitude}
                         onChange={(e) => setLongitude(e.target.value)}
+                        className="border w-full p-2 text-black"
+                        required
+                    />
+                </div>
+                {/* Size Field */}
+                <div>
+                    <label htmlFor="size" className="block text-primary">Land Size (in sq. meters)</label>
+                    <input
+                        type="text"
+                        id="size"
+                        value={size}
+                        onChange={(e) => setSize(e.target.value)}
                         className="border w-full p-2 text-black"
                         required
                     />

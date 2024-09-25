@@ -7,7 +7,7 @@ export default async function handler(req, res) {
         return res.status(405).json({ message: 'Method not allowed' });
     }
 
-    const { uid, fullName, email, address, phoneNumber, ninNumber, imageUrl } = req.body;
+    const { uid, fullName, email, address, phoneNumber, ninNumber, imageUrl, imageUrl1, size, latitude, longitude } = req.body;
 
     if (!uid || !fullName || !address || !phoneNumber || !ninNumber || !imageUrl) {
         return res.status(400).json({ message: 'All fields are required' });
@@ -23,6 +23,10 @@ export default async function handler(req, res) {
             phoneNumber,
             ninNumber,
             imageUrl, // Save image URL
+            latitude,
+            longitude,
+            size, 
+            imageUrl1,
             createdAt: new Date(),
         });
 
