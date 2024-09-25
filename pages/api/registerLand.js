@@ -18,6 +18,7 @@ export default async function handler(req, res) {
         await addDoc(collection(db, 'Lands'), {
             uid,
             fullName,
+            email,
             address,
             status: "pending",
             phoneNumber,

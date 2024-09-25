@@ -8,43 +8,66 @@ import Image from "next/image";
 function AddStaff({ mode, rowData, handleChange, actionLoading, closeModal }) {
   const [formData, setFormData] = useState({
     fullName: "",
+    phoneNumber:"",
     status: "",
-    address: "",
-    phoneNumber: "",
-    imageUrl:"",
-    id:"",
-    uid:""
-
+    address: "", // Include address if needed
+    email: "",
+    latitude: "",
+    longitude: "",
+    size: "", // Include address if needed
+    createdAt: "",
+    uid: "",
+    address: "", // I
+    imageUrl: "",
+    imageUrl1: "",
   });
 
   console.log(rowData);
 
   useLayoutEffect(() => {
     setFormData({
-      id: rowData?.uid || "", // Use rowData.uid for Firestore document ID
       fullName: rowData?.fullName || "",
       phoneNumber: rowData?.phoneNumber || "",
       status: rowData?.status || "",
       address: rowData?.address || "", // Include address if needed
+      email: rowData?.email || "",
+      latitude: rowData?.latitude || "",
+      longitude: rowData?.longitude || "",
+      size: rowData?.size || "", // Include address if needed
+      createdAt: rowData?.createdAt || "", 
+      uid: rowData?.uid || "",
+      address: rowData?.address || "",
+      imageUrl: rowData?.imageUrl || "",
+      imageUrl1: rowData?.imageUrl1 || "", // Include address if needed
     });
   }, [rowData]);
 
   const handleAddUser = async (e) => {
     e.preventDefault();
 
-    if (!formData.id) {
+    if (!rowData.uid) {
       console.error("UID not provided");
       return;
-    }
+  }
 
     const docRef = doc(db, "Lands", rowData.uid); // Use formData.id which is rowData.uid
     try {
       // Set the Firestore document
       await setDoc(docRef, {
         fullName: formData.fullName,
+        fullName: formData.fullName,
         phoneNumber: formData.phoneNumber,
         status: formData.status,
-        address: formData.address, // Include other fields if needed
+        address: formData.address, // Include address if needed
+        email: formData.email,
+        latitude: formData.latitude,
+        longitude: formData.longitude,
+        size: formData.size, // Include address if needed
+        createdAt: formData.createdAt,
+        uid: formData.uid,
+        address: formData.address,
+        imageUrl: formData.imageUrl,
+        imageUrl1: formData.imageUrl1,  // Include other fields if needed
       }, { merge: true }); // Use merge to only update fields instead of overwriting the document
 
       console.log("Document updated successfully");
@@ -89,6 +112,58 @@ function AddStaff({ mode, rowData, handleChange, actionLoading, closeModal }) {
               className="w-full border border-gray-300 py-3 px-5 outline-none mt-2 text-[14px]"
             />
           </div>
+
+          <div className="w-full mt-10">
+            <label className="text-[15px] text-black font-normal">Email</label>
+            <input
+              readOnly={mode === "view"}
+              required
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              name="email"
+              type="text"
+              className="w-full border border-gray-300 py-3 px-5 outline-none mt-2 text-[14px]"
+            />
+          </div>
+
+          <div className="w-full mt-10">
+            <label className="text-[15px] text-black font-normal">Latitude</label>
+            <input
+              readOnly={mode === "view"}
+              required
+              value={formData.latitude}
+              onChange={(e) => setFormData({ ...formData, latitude: e.target.value })}
+              name="latitude"
+              type="text"
+              className="w-full border border-gray-300 py-3 px-5 outline-none mt-2 text-[14px]"
+            />
+          </div>
+
+          <div className="w-full mt-10">
+            <label className="text-[15px] text-black font-normal">Longitude</label>
+            <input
+              readOnly={mode === "view"}
+              required
+              value={formData.longitude}
+              onChange={(e) => setFormData({ ...formData, longitude: e.target.value })}
+              name="longitude"
+              type="text"
+              className="w-full border border-gray-300 py-3 px-5 outline-none mt-2 text-[14px]"
+            />
+          </div>
+
+          <div className="w-full mt-10">
+            <label className="text-[15px] text-black font-normal">Size</label>
+            <input
+              readOnly={mode === "view"}
+              required
+              value={formData.size}
+              onChange={(e) => setFormData({ ...formData, size: e.target.value })}
+              name="size"
+              type="text"
+              className="w-full border border-gray-300 py-3 px-5 outline-none mt-2 text-[14px]"
+            />
+          </div>
           <div className="w-full mt-10">
             <label className="text-[15px] text-black font-normal">Status</label>
             {mode === "view" ? (
@@ -114,9 +189,10 @@ function AddStaff({ mode, rowData, handleChange, actionLoading, closeModal }) {
               </select>
             )}
           </div>
-          <div className="w-full mt-10">
-          <label className="text-[15px] text-black font-normal">Land Image</label>
-          <img src={rowData?.imageUrl} width={122} height={122} className="" alt=""/>
+          <h1 className="text-[15px] mt-10 text-black font-normal">Land Images</h1>
+          <div className="w-full grid grid-cols-2 justify-items-center mt-10">
+          <img src={rowData?.imageUrl} width={200} height={200} className="" alt=""/>
+          <img src={rowData?.imageUrl1} width={200} height={200} className="" alt=""/>
         </div>
         </div>
 
