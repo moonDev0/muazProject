@@ -36,9 +36,7 @@ const Sidebar = () => {
     { text: "Pending", href:"/pending", icon: <FaTasks /> },
     { text: "Apply Now", href: "/registerLand", icon: <FaTasks /> },
     { text: "Rejected", href: "/rejected", icon: <FaMailBulk /> },
-    { text: "Emails", href: "#", icon: <HiChatBubbleLeftRight /> },
     { text: "Users", href: "/users", icon: <IoLogInSharp /> },
-    { text: "Logs", href: "#", icon: <IoLogInSharp /> },
   ];
 
   const ST = [
@@ -52,7 +50,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     switch (user?.role) {
-      case 'Admin':
+      case 'admin':
         setSidebarItems(AD);
         break;
       case 'user':

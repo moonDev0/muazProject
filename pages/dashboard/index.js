@@ -71,7 +71,7 @@ const Dashboard = () => {
 
                         <div>
                             <h3 className=' font-medium text-[14px] mt-[-8px] text-[#999999]'>pending</h3>
-                            <h1 className=' leading-8 text-primary text-[32px] font-extrabold '>20</h1>
+                            <h1 className=' leading-8 text-primary text-[32px] font-extrabold '>2</h1>
                         </div>
                     </div>
 
@@ -82,7 +82,7 @@ const Dashboard = () => {
 
                         <div>
                             <h3 className=' font-medium text-[14px] mt-[-8px] text-[#999999]'>Approved</h3>
-                            <h1 className=' leading-8 text-primary text-[32px] font-extrabold '>20</h1>
+                            <h1 className=' leading-8 text-primary text-[32px] font-extrabold '>2</h1>
                         </div>
                     </div>
 
@@ -93,7 +93,7 @@ const Dashboard = () => {
 
                         <div>
                             <h3 className=' font-medium text-[14px] mt-[-8px] text-[#999999]'>rejected</h3>
-                            <h1 className=' leading-8 text-primary text-[32px] font-extrabold '>20</h1>
+                            <h1 className=' leading-8 text-primary text-[32px] font-extrabold '>1</h1>
                         </div>
                     </div>
 
@@ -104,7 +104,7 @@ const Dashboard = () => {
 
                         <div>
                             <h3 className=' font-medium text-[14px] mt-[-8px] text-[#999999]'>certificates</h3>
-                            <h1 className=' leading-8 text-primary text-[32px] font-extrabold '>20</h1>
+                            <h1 className=' leading-8 text-primary text-[32px] font-extrabold '>1</h1>
                         </div>
                     </div>
                </div>
