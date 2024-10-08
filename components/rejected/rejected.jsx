@@ -7,6 +7,7 @@ import { getDocs, collection } from 'firebase/firestore';
 import { db } from '@/firebase'; // Import Firebase Firestore
 import ModalContainerAlt from "../common/modalContainerAlt";
 import AddStaff from "../UIcomponents/AddStaff";
+import useUserStore from "@/store/useStore";
 
 const RejectedComponents = () => {
   const [loading, setLoading] = useState(false);
@@ -16,6 +17,7 @@ const RejectedComponents = () => {
   const [rowData, setRowData] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [data, setData] = useState([]);
+  const {user} = useUserStore();
 
   // Function to handle deleting a user
   const handleDelete = (user) => {
@@ -82,6 +84,8 @@ const RejectedComponents = () => {
       </div>
 
       <div className="mt-10">
+      {
+        user?.role == "admin" ?
         <Table
           header={[
             { name: "Owner", identifier: "fullName" },
@@ -106,6 +110,32 @@ const RejectedComponents = () => {
           setOpenModal={setOpenModal}
           loading={loading}
         />
+          :
+          <Table
+          header={[
+            { name: "Owner", identifier: "fullName" },
+            { name: "Phone Number", identifier: "phoneNumber" },
+            { name: "Status", identifier: "status" },
+            { name: "Email", identifier: "email" },
+          ]}
+          data={data.filter((item, index)=> item.status == "rejected")}
+          searchQuery={searchQuery} // Filter the table based on the search
+          options={{
+            variant: "primary",
+            tableStyle: "",
+            allowSorting: false,
+            allowActions: true, // Enabling actions
+            actions: {
+              edit: false,
+              view: true,
+              delete: false,
+            },
+          }}
+          setRowData={setRowData}
+          setOpenModal={setOpenModal}
+          loading={loading}
+        />
+      }
       </div>
 
       {openModal.modalName === "edit" && openModal?.showModal && (

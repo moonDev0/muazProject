@@ -20,6 +20,7 @@ function AddStaff({ mode, rowData, handleChange, actionLoading, closeModal }) {
     address: "", // I
     imageUrl: "",
     imageUrl1: "",
+    comment: "",
   });
 
   console.log(rowData);
@@ -194,6 +195,20 @@ function AddStaff({ mode, rowData, handleChange, actionLoading, closeModal }) {
           <img src={rowData?.imageUrl} width={200} height={200} className="" alt=""/>
           <img src={rowData?.imageUrl1} width={200} height={200} className="" alt=""/>
         </div>
+
+        <div className="w-full mt-10">
+            <label className="text-[15px] text-black font-normal">Comments</label>
+            <textarea
+              readOnly={mode === "viewd"}
+              required
+              value={formData.comment}
+              onChange={(e) => setFormData({ ...formData, size: e.target.value })}
+              name="comment"
+              type="text"
+              rows={3}
+              className="w-full border border-gray-300 py-3 px-5 outline-none mt-2 text-[14px]"
+            />
+          </div>
         </div>
 
         {mode !== "view" && (
